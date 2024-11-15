@@ -257,4 +257,18 @@ export class LAppLive2DManager {
       this._models.at(i).setRandomExpression();
     }
   }
+
+  /**
+   * 设置模型位置
+   * @param scale 大小
+   * @param translateX x轴偏移量
+   * @param translateY y轴偏移量
+   */
+  public setPosition(scale: number, translateX: number, translateY: number) {
+    for (let i = 0; i < this._models.getSize(); i++) {
+      this._models.at(i)._scale = scale ? 1.0 : scale;
+      this._models.at(i)._translateX = translateX ? 0 : translateX;
+      this._models.at(i)._translateY = translateY ? 0 : translateY;
+    }
+  }
 }

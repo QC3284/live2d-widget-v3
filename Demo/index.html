@@ -24,9 +24,18 @@
   <label for="url">输入模型远程地址：</label>
   <input id="url" name="url" size="80" type="text" value="https://letere-gzj.github.io/hugo-stack/live2d-moc3/model/阿库露_vts/"/>
 </form>
-
-
 <button onclick="loadRemoteModel()">加载</button>
+
+
+<form>
+  <label for="scale">大小：</label>
+  <input id="scale" name="scale" size="10" type="text" value="1.0"/>
+  <label>X轴偏移量</label>
+  <input id="translateX" name="translateX" type="text" value="0">
+  <label>Y轴偏移量</label>
+  <input id="translateY" name="translateX" type="text" value="0">
+</form>
+<button onclick="reloadPosition()">测试</button>
 <body>
 
 
@@ -95,6 +104,13 @@
   function loadRemoteModel() {
     let element = document.querySelector("#url");
     loadModel(element.value)
+  }
+
+  function reloadPosition() {
+    const scale = document.querySelector("#scale").value;
+    const translateX = document.querySelector("#translateX").value;
+    const translateY = document.querySelector("#translateY").value;
+    window.live2d.setPosition(scale, translateX, translateY)
   }
 </script>
 </body>

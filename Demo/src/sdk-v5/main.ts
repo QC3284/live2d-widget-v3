@@ -57,7 +57,7 @@ window.live2d = window.live2d || {};
 /**
  * live2d初始化
  */
-window.live2d.init = (cdnPath: string) => {
+window.live2d.init = () => {
   // 参数初始化
   if (
     !LAppGlManager.getInstance() ||
@@ -82,6 +82,14 @@ window.live2d.loadModel = (modelDir: string) => {
 window.live2d.randomExpression = () => {
   LAppLive2DManager.getInstance().randomExpression();
 };
+
+window.live2d.setPosition = (
+  scale: number,
+  translateX: number,
+  translateY: number
+) => {
+  LAppLive2DManager.getInstance().setPosition(scale, translateX, translateY);
+}
 
 /**
  * 释放模型
