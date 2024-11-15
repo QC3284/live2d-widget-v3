@@ -1,3 +1,5 @@
-import initWidget from "./";
+import model from "./";
 
-window.initWidget = initWidget;
+window.initWidget = model.initWidget;
+window.loadModel = model.loadModel;
+

@@ -41,6 +41,15 @@ class Model {
     }
 
     /**
+     * 加载模型（通过模型目录）
+     * @param modelDir 模型目录
+     * @returns {Promise<void>}
+     */
+    async loadModelByDir(modelDir) {
+        window.live2d.loadModel(modelDir)
+    }
+
+    /**
      * 切换皮肤（同一组模型）
      * @returns {Promise<void>}
      */

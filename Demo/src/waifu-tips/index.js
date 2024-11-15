@@ -3,8 +3,9 @@ import showMessage from "./message.js";
 import randomSelection from "./utils.js";
 import tools from "./tools.js";
 
+let model;
 function loadWidget(config) {
-    const model = new Model(config);
+    model = new Model(config);
     localStorage.removeItem("waifu-display");
     sessionStorage.removeItem("waifu-text");
     document.body.insertAdjacentHTML("beforeend", `<div id="waifu">
@@ -240,4 +241,12 @@ function initWidget(config, apiPath) {
     }
 }
 
-export default initWidget;
+function loadModel(modelDir) {
+    if (!model) {
+        return
+    }
+    model.loadModelByDir(modelDir)
+}
+
+export default {initWidget, loadModel};
+

@@ -6,24 +6,31 @@
   <title>TypeScript HTML App</title>
   <style>
     html, body {
-        margin: 0;
-        overflow: hidden;
+      margin: 0;
+      overflow: hidden;
     }
 
     body {
       background: antiquewhite;
     }
     canvas {
-        width: 300px;
-        height: 300px;
-        display: block;
+      width: 300px;
+      height: 300px;
+      display: block;
     }
   </style>
 </head>
+<form>
+  <label for="url">输入模型远程地址：</label>
+  <input id="url" name="url" size="80" type="text" value="https://letere-gzj.github.io/hugo-stack/live2d-moc3/model/阿库露_vts/"/>
+</form>
+
+
+<button onclick="loadRemoteModel()">加载</button>
 <body>
 
-<script>
 
+<script>
   const config = {
     // 资源路径
     path: {
@@ -83,6 +90,11 @@
         document.head.appendChild(tag);
       }
     });
+  }
+
+  function loadRemoteModel() {
+    let element = document.querySelector("#url");
+    loadModel(element.value)
   }
 </script>
 </body>
