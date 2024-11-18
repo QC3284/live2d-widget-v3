@@ -266,9 +266,9 @@ export class LAppLive2DManager {
    */
   public setPosition(scale: number, translateX: number, translateY: number) {
     for (let i = 0; i < this._models.getSize(); i++) {
-      this._models.at(i)._scale = scale ? 1.0 : scale;
-      this._models.at(i)._translateX = translateX ? 0 : translateX;
-      this._models.at(i)._translateY = translateY ? 0 : translateY;
+      this._models.at(i)._scale = scale ? scale : 1.0;
+      this._models.at(i)._translateX = translateX ? translateX : 0;
+      this._models.at(i)._translateY = translateY ? translateY : 0;
     }
   }
 }
