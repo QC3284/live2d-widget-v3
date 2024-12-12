@@ -9,7 +9,8 @@
 const fs = require('fs');
 const publicResources = [
   {src: '../Core', dst: './public/Core'},
-  {src: '../Resources', dst: './public/Resources'},
+  {src: '../Resources/live2d-model', dst: './public/Resources'},
+  {src: '../Resources/md', dst: './public'},
   {src: '../waifu.css', dst: './public/assets/waifu.css'},
   {src: '../waifu-tips.json', dst: './public/assets/waifu-tips.json'}
 ];
