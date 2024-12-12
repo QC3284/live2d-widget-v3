@@ -1,6 +1,6 @@
 import Model from "./model.js";
 import showMessage from "./message.js";
-import randomSelection from "./utils.js";
+import { randomSelection } from "./utils.js";
 import tools from "./tools.js";
 
 let model;
@@ -33,42 +33,12 @@ function loadWidget(config) {
         }
     })();
 
-    function welcomeMessage(time) {
-        if (location.pathname === "/hugo-stack") { // 如果是主页
-            for (let { hour, text } of time) {
-                const now = new Date(),
-                    after = hour.split("-")[0],
-                    before = hour.split("-")[1] || after;
-                if (after <= now.getHours() && now.getHours() <= before) {
-                    return text;
-                }
-            }
-        }
-        const text = `欢迎阅读<span>「${document.title.split(" - ")[0]}」</span>`;
-        let from;
-        if (document.referrer !== "") {
-            const referrer = new URL(document.referrer),
-                domain = referrer.hostname.split(".")[1];
-            const domains = {
-                "baidu": "百度",
-                "so": "360搜索",
-                "google": "谷歌搜索"
-            };
-            if (location.hostname === referrer.hostname) return text;
-
-            if (domain in domains) from = domains[domain];
-            else from = referrer.hostname;
-            return `Hello！来自 <span>${from}</span> 的朋友<br>${text}`;
-        }
-        return text;
-    }
-
     function registerEventListener(result) {
+        jsonData = result;
         // 检测用户活动状态，并在空闲时显示消息
         let userAction = false,
             userActionTimer,
-            messageArray = result.message.default,
-            lastHoverElement;
+            messageArray = result.message.default;
         window.addEventListener("mousemove", () => userAction = true);
         window.addEventListener("keydown", () => userAction = true);
         setInterval(() => {
@@ -82,12 +52,10 @@ function loadWidget(config) {
                 }, 20000);
             }
         }, 1000);
-        showMessage(welcomeMessage(result.time), 7000, 11);
+        showMessage(welcomeMessage(), 7000, 11);
         window.addEventListener("mouseover", event => {
             for (let { selector, text } of result.mouseover) {
                 if (!event.target.closest(selector)) continue;
-                if (lastHoverElement === selector) return;
-                lastHoverElement = selector;
                 text = randomSelection(text);
                 text = text.replace("{text}", event.target.innerText);
                 showMessage(text, 4000, 8);
@@ -214,6 +182,7 @@ function initWidget(config, apiPath) {
             apiPath
         };
     }
+    homePath = config.homePath;
     document.body.insertAdjacentHTML("beforeend", `<div id="waifu-toggle">
             <span>看板娘</span>
         </div>`);
@@ -241,6 +210,42 @@ function initWidget(config, apiPath) {
     }
 }
 
+let jsonData = null;
+let homePath = '/';
+function welcomeMessage() {
+    if (location.pathname === homePath) { // 如果是主页
+        for (let { hour, text } of jsonData.time) {
+            const now = new Date(),
+                after = hour.split("-")[0],
+                before = hour.split("-")[1] || after;
+            if (after <= now.getHours() && now.getHours() <= before) {
+                return text;
+            }
+        }
+    }
+    const text = `欢迎阅读<span>「${document.title.split(" - ")[0]}」</span>`;
+    let from;
+    if (document.referrer !== "") {
+        const referrer = new URL(document.referrer),
+            domain = referrer.hostname.split(".")[1];
+        const domains = {
+            "baidu": "百度",
+            "so": "360搜索",
+            "google": "谷歌搜索"
+        };
+        if (location.hostname === referrer.hostname) return text;
+
+        if (domain in domains) from = domains[domain];
+        else from = referrer.hostname;
+        return `Hello！来自 <span>${from}</span> 的朋友<br>${text}`;
+    }
+    return text;
+}
+
+function showWelcomeMessage() {
+    showMessage(welcomeMessage(), 7000, 11);
+}
+
 function loadModel(modelDir) {
     if (!model) {
         return
@@ -248,5 +253,4 @@ function loadModel(modelDir) {
     model.loadModelByDir(modelDir)
 }
 
-export default {initWidget, loadModel};
-
+export {initWidget, showWelcomeMessage, loadModel};

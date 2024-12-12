@@ -27,14 +27,14 @@ class Model {
     async loadModel(modelId, modelTexturesId, message) {
         localStorage.setItem("modelId", modelId);
         localStorage.setItem("modelTexturesId", modelTexturesId);
-        showMessage(message, 4000, 10);
         if (!this.modelList) await this.loadModelList();
+        showMessage(message, 4000, 10);
         const target = this.modelList.models[modelId][modelTexturesId];
         if (target === undefined) {
             if (parseInt(modelId) === 0 && parseInt(modelTexturesId) === 0) {
                 return;
             }
-            await this.loadModel(0, 0, message);
+            await this.loadModel(0, 0, this.modelList.messages[0][0]);
             return;
         }
         window.live2d.loadModel(`${this.cdnPath}`+ 'model/' + target + '/')
@@ -68,7 +68,7 @@ class Model {
             modelTexturesId = randomTexturesId
         }
         // 加载模型
-        this.loadModel(modelId, modelTexturesId, "我的新衣服好看嘛？")
+        this.loadModel(modelId, modelTexturesId, this.modelList.messages[modelId][modelTexturesId])
     }
 
     /**
@@ -79,7 +79,7 @@ class Model {
         let modelId = localStorage.getItem("modelId");
         if (!this.modelList) await this.loadModelList();
         const index = (++modelId >= this.modelList.models.length) ? 0 : modelId;
-        this.loadModel(index, 0, this.modelList.messages[index]);
+        this.loadModel(index, 0, this.modelList.messages[index][0]);
     }
 }
 

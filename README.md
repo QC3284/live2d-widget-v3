@@ -4,10 +4,18 @@
 
 ## 1 介绍
 
-+ 此项目是基于【[stevenjoezhang/live2d-widget](https://github.com/stevenjoezhang/live2d-widget)】项目的二次开发
-+ 原本live2d-widget只能渲染moc模型，无法渲染moc3模型，于是此项目在原版的架构上，对接了新版的Cubism SDK for Web(sdk当前版本v5)，来渲染moc3模型
-+ 因为是基于live2d-widget项目的二次开发，使用体验上与原版的live2d-widget相差不大，基本的功能都有所保留
-+ **tips**: 此项目暂适配moc3模型，并不适配moc模型，且暂时未考虑适配moc模型
++ **演示地址**：[DEMO](https://letere-gzj.github.io/live2d-v3-demo/)
++ **文章教程**：[【Hugo】博客引入moc3类型的live2d模型](https://letere-gzj.github.io/hugo-stack/p/hugo/live2d-moc3/)
+
+![](md/png/sample.png)
+
+> [!NOTE]
+> + （1）此项目是基于【[stevenjoezhang/live2d-widget](https://github.com/stevenjoezhang/live2d-widget)】项目的二次开发
+> + （2）原本live2d-widget只能渲染moc模型，无法渲染moc3模型，于是此项目在原版的架构上，对接了新版的Cubism SDK for Web(sdk当前版本v5)，来渲染moc3模型
+> + （3）因为是基于live2d-widget项目的二次开发，使用体验上与原版的live2d-widget相差不大，基本的功能都有所保留
+
+> [!TIP]
+>  + **Tips:** 此项目暂适配moc3模型，并不适配moc模型，且暂时未考虑适配moc模型
 
 ---
 
@@ -22,6 +30,7 @@
   const config = {
     // 资源路径
     path: {
+      homePath: '/',
       modelPath: cdnPath + "/Resources/",
       cssPath: cdnPath + "/waifu.css",
       tipsJsonPath: cdnPath + "/waifu-tips.json",
@@ -49,6 +58,7 @@
       loadExternalResource(config.path.tipsJsPath, "js")
     ]).then(() => {
       initWidget({
+        homePath: config.path.homePath,
         waifuPath: config.path.tipsJsonPath,
         cdnPath: config.path.modelPath,
         tools: config.tools,
@@ -88,16 +98,17 @@
 
 + 通过修改config对象的参数，实现自定义效果
 
-|                                     参数                                     | 说明                                                                                                                                                                                                      |
-|:--------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|                             **path.modelPath**                             | 模型文件的路径，即可访问到model和model_list.json文件的路径，可搭配【[jsDelivr](https://www.jsdelivr.com/)】来使用cdn路径                                                                                                                                       |
-|                              **path.cssPath**                              | live2d画布的css样式的路径，可直接在仓库下载此文件，来自定义自己想要的样式，然后通过本地或cdn引入自己改好的css文件                                                                                                                                        |
-|                           **path.tipsJsonPath**                            | live2d提示语json文件的路径，默认适配hexo-next主题，可直接在仓库下载此文件，来自定义适配自己的主题，然后通过本地或cdn引入自己改好的json文件                                                                                                                      |
-| **path.tipsJsPath**<br> **path.live2dCorePath**<br> **path.live2dSdkPath** | 代码核心文件路径，不建议修改                                                                                                                                                                                          | |
-|                                 **tools**                                  | 工具栏按钮：<br> **（1）hitokoto**: 一言<br> **（2）asteroids**: 网页飞机小游戏<br> **（3）express**: 切换模型表情<br> **（4）switch-model**: 切换模型分组<br> **（5）switch-texture**: 切换分组下的模型<br> **（6）info**: 作者信息<br> **（7）quit**: 隐藏模型 |
-|                              **drag.enable**                               | 是否开启模型拖拽功能（true:开启, false:关闭）                                                                                                                                                                           |
-|                             **drag.direction**                             | 模型拖拽方向（x:水平移动, y:垂直移动）                                                                                                                                                                                  |
-|                               **switchType**                               | 模型切换顺序（order:顺序切换, random:随机切换）                                                                                                                                                                         |
+|                                     参数                                     | 说明                                                                                                                                                                                                                           |
+|:--------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|                             **path.homePath**                              | 网站主页路径，若域名后有子路径，则将子路径填写上，结尾记得带上 `/` , 如果没有子路经则 `/` 就好，用来显示live2d的时间提示语                                                                                                                                                       |
+|                             **path.modelPath**                             | 模型文件的路径，即可访问到model和model_list.json文件的路径，可搭配【[jsDelivr](https://www.jsdelivr.com/)】来使用cdn路径                                                                                                                                   |
+|                              **path.cssPath**                              | live2d画布的css样式的路径，可直接在仓库下载此文件，来自定义自己想要的样式，然后通过本地或cdn引入自己改好的css文件                                                                                                                                                             |
+|                           **path.tipsJsonPath**                            | live2d提示语json文件的路径，默认适配hexo-next主题，可直接在仓库下载此文件，来自定义适配自己的主题，然后通过本地或cdn引入自己改好的json文件                                                                                                                                           |
+| **path.tipsJsPath**<br> **path.live2dCorePath**<br> **path.live2dSdkPath** | 代码核心文件路径，不建议修改                                                                                                                                                                                                               | |
+|                                 **tools**                                  | 工具栏按钮：<br> **（1）hitokoto**: 一言<br> **（2）asteroids**: 网页飞机小游戏<br> **（3）express**: 切换模型表情<br> **（4）switch-model**: 切换模型分组<br> **（5）switch-texture**: 切换分组下的模型<br> **（6）photo**: 截图<br> **（7）info**: 作者信息<br> **（8）quit**: 隐藏模型 |
+|                              **drag.enable**                               | 是否开启模型拖拽功能（true:开启, false:关闭）                                                                                                                                                                                                |
+|                             **drag.direction**                             | 模型拖拽方向（x:水平移动, y:垂直移动）                                                                                                                                                                                                       |
+|                               **switchType**                               | 模型切换顺序（order:顺序切换, random:随机切换）                                                                                                                                                                                              |
 
 ---
 
@@ -126,8 +137,8 @@
         ["模型3文件夹路径"]
     ],
     "messages": [
-        "分组1",
-        "分组2"
+        ["模型1入场语", "模型2入场语"],
+        ["模型3入场语"]
     ]
 }
 ```
@@ -141,6 +152,7 @@
 
 + **(1) 调整模型大小和位置**
   + 在模型目录下，创建`config.json`文件，并填写下面的参数，具体参考 **Resources** 目录下的模型
+  + 调整模型大小和位置，可以搭配 [DEMO](https://letere-gzj.github.io/live2d-v3-demo/) 使用
   + **scale**: 模型大小
   + **translate.x**：模型x轴偏移量
   + **translate.y**：模型y轴偏移量
